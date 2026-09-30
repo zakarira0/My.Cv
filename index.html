@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>زكريا عمر عادل | Zakaria Omar Adel — Front-End Developer</title>
+  <meta name="description" content="الموقع الشخصي لزكريا عمر عادل: مطوّر واجهات أمامية وصانع محتوى تقني. تعرّف على المهارات، الإنجازات، الشهادات، المشاريع، وطرق التواصل." />
+
+  <!-- أيقونة الموقع (emoji بسيط بدون ملفات خارجية) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>" />
+
+  <!-- الخط الوحيد المستخدم في الموقع -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       1) المتغيرات — غيّر كل الألوان من هذا المكان فقط
+       ============================================================ */
+    :root{
+      --bg:         #0D1117;   /* خلفية الصفحة */
+      --card:       #161B22;   /* خلفية البطاقات */
+      --blue:       #2563EB;   /* اللون الأساسي (الأزرار) */
+      --sky:        #38BDF8;   /* لون التمييز (العناوين والروابط) */
+      --text:       #FFFFFF;   /* النص الأساسي */
+      --muted:      #94A3B8;   /* النص الثانوي */
+      --border:     #24303F;   /* لون الحدود */
+      --radius:     16px;
+      --radius-sm:  10px;
+      --max-width:  1040px;
+    }
+
+    /* ============================================================
+       2) أساسيات الصفحة
+       ============================================================ */
+    *,*::before,*::after{ box-sizing:border-box; }
+
+    html{ scroll-behavior:smooth; }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Cairo','Segoe UI',Tahoma,sans-serif;
+      font-size:16px;          /* الحد الأدنى لحجم النص */
+      line-height:1.9;
+    }
+
+    img{ display:block; max-width:100%; }
+
+    a{ color:var(--sky); text-decoration:none; }
+
+    h1,h2,h3{ margin:0 0 .5rem; line-height:1.4; }
+
+    /* حاوية عامة بعرض محدود */
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      margin-inline:auto;
+      padding-inline:1rem;
+    }
+
+    /* مساحة أمان عند الانتقال للقسم بسبب الشريط العلوي الثابت */
+    section[id]{ scroll-margin-top:90px; }
+
+    /* ============================================================
+       3) الشريط العلوي (Navbar)
+       ============================================================ */
+    .site-header{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:rgba(13,17,23,.95);
+      border-bottom:1px solid var(--border);
+      backdrop-filter:blur(8px);
+    }
+
+    .navbar{
+      display:flex;
+      flex-direction:column;
+      gap:.5rem;
+      padding-block:.75rem;
+    }
+
+    .logo{
+      align-self:flex-start;
+      font-weight:800;
+      font-size:1.15rem;
+      letter-spacing:.5px;
+      color:var(--sky);
+    }
+
+    /* في الموبايل: صف أفقي قابل للتمرير بدون JavaScript */
+    .nav-links{
+      display:flex;
+      gap:.5rem;
+      margin:0;
+      padding:0 0 .3rem;
+      list-style:none;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .nav-links a{
+      display:block;
+      white-space:nowrap;
+      padding:.3rem .8rem;
+      font-size:.95rem;
+      color:var(--muted);
+      border:1px solid var(--border);
+      border-radius:999px;
+      transition:color .2s, border-color .2s;
+    }
+
+    .nav-links a:hover{
+      color:var(--sky);
+      border-color:var(--sky);
+    }
+
+    /* ============================================================
+       4) قسم البداية (Hero)
+       ============================================================ */
+    .hero{
+      width:100%;
+      max-width:var(--max-width);
+      margin-inline:auto;
+      padding:2.5rem 1rem;
+      display:grid;
+      gap:1.5rem;
+      justify-items:center;
+      text-align:center;
+    }
+
+    /* إطار الصورة الشخصية — يظهر كإطار أنيق حتى لو لم توجد الصورة */
+    .avatar-frame{
+      width:190px;
+      height:190px;
+      padding:6px;
+      border-radius:50%;
+      border:3px solid var(--blue);
+      background:linear-gradient(140deg,#1E293B,var(--card));
+      box-shadow:0 0 0 8px rgba(37,99,235,.10);
+      overflow:hidden;
+    }
+
+    /* غيّر IMG_6017.jpeg إلى اسم صورتك (نفس المجلد) */
+    .avatar-frame img{
+      width:100%;
+      height:100%;
+      border-radius:50%;
+      object-fit:cover;
+      background:var(--card);
+      color:var(--muted);
+      font-size:.8rem;
+    }
+
+    .hero-name{
+      font-size:clamp(1.8rem,6vw,2.6rem);
+      font-weight:800;
+    }
+
+    .hero-name-ar{
+      margin:0;
+      color:var(--muted);
+      font-size:1.05rem;
+    }
+
+    .hero-role{
+      margin:.6rem 0;
+      color:var(--sky);
+      font-weight:600;
+    }
+
+    .hero-text{
+      margin:0 0 1.25rem;
+      color:var(--muted);
+      max-width:60ch;
+    }
+
+    /* ============================================================
+       5) الأزرار
+       ============================================================ */
+    .btn-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem;
+      justify-content:center;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:.65rem 1.3rem;
+      font-size:1rem;
+      font-weight:600;
+      border-radius:var(--radius-sm);
+      border:1px solid transparent;
+      transition:background .2s, border-color .2s, color .2s, transform .2s;
+    }
+
+    .btn-primary{
+      background:var(--blue);
+      color:#FFFFFF;
+    }
+
+    .btn-primary:hover{
+      background:#1D4ED8;
+      transform:translateY(-2px);
+    }
+
+    .btn-ghost{
+      border-color:var(--border);
+      color:var(--text);
+    }
+
+    .btn-ghost:hover{
+      border-color:var(--sky);
+      color:var(--sky);
+      transform:translateY(-2px);
+    }
+
+    /* ============================================================
+       6) الأقسام والعناوين والبطاقات
+       ============================================================ */
+    .section{
+      width:100%;
+      max-width:var(--max-width);
+      margin-inline:auto;
+      padding:2rem 1rem;
+    }
+
+    .section-title{
+      direction:ltr;          /* العنوان إنجليزي */
+      text-align:right;       /* يبقى ملتصقًا بجهة البداية في RTL */
+      font-size:1.6rem;
+      font-weight:700;
+      padding-right:.75rem;
+      border-right:4px solid var(--blue);
+    }
+
+    .grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:1fr;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:1.25rem;
+      transition:border-color .2s, transform .2s;
+    }
+
+    .card:hover{
+      border-color:var(--blue);
+      transform:translateY(-2px);
+    }
+
+    .card-title{
+      direction:ltr;          /* العنوان إنجليزي */
+      text-align:right;
+      font-size:1.1rem;
+      font-weight:700;
+    }
+
+    .card-text{
+      margin:0;
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    .card-icon{
+      font-size:1.6rem;
+      line-height:1;
+      display:block;
+      margin-bottom:.5rem;
+    }
+
+    /* بطاقة About تحتاج نصًا أطول قليلًا */
+    .about-card p{ margin:0; color:var(--muted); }
+
+    /* شارة صغيرة (مثل 12K+ Followers) */
+    .badge{
+      display:inline-block;
+      margin-top:.5rem;
+      padding:.15rem .7rem;
+      font-size:.85rem;
+      font-weight:600;
+      color:var(--sky);
+      border:1px solid var(--sky);
+      border-radius:999px;
+    }
+
+    /* ============================================================
+       7) إطارات الصور (المشروع / الشعار)
+       ============================================================ */
+    .media-frame{
+      width:100%;
+      aspect-ratio:16/10;
+      margin-bottom:1rem;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:1px solid var(--border);
+      border-radius:var(--radius-sm);
+      background:linear-gradient(135deg,#1B2430,var(--card));
+    }
+
+    /* نفس الطريقة لإطار مربّع (شعار ZakWare) */
+    .media-frame--square{
+      aspect-ratio:1/1;
+      max-width:220px;
+    }
+
+    .media-frame img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      color:var(--muted);
+      font-size:.8rem;
+      text-align:center;
+      padding:.5rem;
+    }
+
+    /* ============================================================
+       8) قسم التواصل
+       ============================================================ */
+    .contact-card{
+      display:block;
+      text-align:center;
+      padding:1.25rem .75rem;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      color:var(--text);
+      font-weight:600;
+      transition:border-color .2s, transform .2s, color .2s;
+    }
+
+    .contact-card:hover{
+      border-color:var(--sky);
+      color:var(--sky);
+      transform:translateY(-2px);
+    }
+
+    .contact-card span{
+      display:block;
+      font-size:1.5rem;
+      margin-bottom:.35rem;
+    }
+
+    /* ============================================================
+       9) التذييل
+       ============================================================ */
+    .site-footer{
+      margin-top:2rem;
+      padding:1.5rem 1rem;
+      text-align:center;
+      color:var(--muted);
+      border-top:1px solid var(--border);
+    }
+
+    .site-footer p{ margin:0; font-size:.95rem; }
+
+    /* ============================================================
+       10) الاستجابة للشاشات الكبيرة (Mobile-first)
+       ============================================================ */
+    @media (min-width:768px){
+
+      /* الشريط العلوي يصبح صفًا واحدًا */
+      .navbar{
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
+      }
+
+      .logo{ align-self:center; }
+
+      .nav-links{ padding:0; overflow:visible; }
+
+      /* البداية: الصورة يمينًا والمحتوى بجانبها */
+      .hero{
+        grid-template-columns:220px 1fr;
+        align-items:center;
+        justify-items:start;
+        gap:2.5rem;
+        text-align:right;
+        padding-block:4rem 3rem;
+      }
+
+      .btn-row{ justify-content:flex-start; }
+
+      /* شبكات من عمودين */
+      .grid-2,
+      .grid-3{ grid-template-columns:repeat(2,1fr); }
+    }
+
+    @media (min-width:1024px){
+
+      /* شبكة من ثلاثة أعمدة */
+      .grid-3{ grid-template-columns:repeat(3,1fr); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ==================== Navbar ==================== -->
+  <header class="site-header">
+    <nav class="navbar container" aria-label="القائمة الرئيسية">
+      <a class="logo" href="#hero">ZakWare</a>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#certificates">Certificates</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#content">Content</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ==================== Hero ==================== -->
+    <section class="hero" id="hero">
+
+      <!-- غيّر IMG_6017.jpeg إلى اسم صورتك (نفس مجلد index.html) -->
+      <div class="avatar-frame">
+        <img src="IMG_6017.jpeg" alt="Zakaria Omar Adel" />
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-name" dir="ltr">Zakaria Omar Adel</h1>
+        <p class="hero-name-ar">زكريا عمر عادل</p>
+
+        <p class="hero-role" dir="ltr">Front-End Developer | Web Developer | Technical Content Creator</p>
+
+        <p class="hero-text">
+          أهتم بتطوير الواجهات الأمامية وتصميم وتطوير مواقع الويب، وأقدّم محتوى تقنيًا تعليميًا مبسّطًا للطلاب والمبتدئين.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#about">About Me</a>
+          <a class="btn btn-ghost" href="#projects">My Projects</a>
+          <a class="btn btn-ghost" href="#contact">Contact</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== About Me ==================== -->
+    <section class="section" id="about">
+      <h2 class="section-title">About Me</h2>
+
+      <article class="card about-card">
+        <p>
+          أنا زكريا عمر عادل، عمري 20 سنة، طالب في جامعة التقنية الشمالية – كلية تقنيات الصحية والطبية –
+          قسم المختبرات الطبية – المرحلة الثالثة – الدراسة المسائية. أهتم بتطوير الواجهات الأمامية وتصميم
+          وتطوير مواقع الويب، كما أعمل في صناعة المحتوى التقني والتعليم البرمجي.
+        </p>
+      </article>
+    </section>
+
+    <!-- ==================== My Skills ==================== -->
+    <section class="section" id="skills">
+      <h2 class="section-title">My Skills</h2>
+
+      <div class="grid grid-3">
+
+        <article class="card skill-card">
+          <span class="card-icon">🧩</span>
+          <h3 class="card-title">Front-End Development</h3>
+          <p class="card-text">بناء واجهات مستخدم حديثة ومنظمة.</p>
+        </article>
+
+        <article class="card skill-card">
+          <span class="card-icon">🌐</span>
+          <h3 class="card-title">Web Development</h3>
+          <p class="card-text">تصميم وتطوير مواقع الويب بشكل كامل.</p>
+        </article>
+
+        <article class="card skill-card">
+          <span class="card-icon">📄</span>
+          <h3 class="card-title">HTML</h3>
+          <p class="card-text">كتابة هيكل صفحات دلالي ومنظّم.</p>
+        </article>
+
+        <article class="card skill-card">
+          <span class="card-icon">🎨</span>
+          <h3 class="card-title">CSS</h3>
+          <p class="card-text">تنسيق الصفحات وتصميمها بشكل متجاوب.</p>
+        </article>
+
+        <article class="card skill-card">
+          <span class="card-icon">⚡</span>
+          <h3 class="card-title">JavaScript</h3>
+          <p class="card-text">إضافة التفاعل والوظائف للصفحات.</p>
+        </article>
+
+        <article class="card skill-card">
+          <span class="card-icon">🖌️</span>
+          <h3 class="card-title">UI Design</h3>
+          <p class="card-text">تصميم واجهات بسيطة وواضحة.</p>
+        </article>
+
+        <article class="card skill-card">
+          <span class="card-icon">🎬</span>
+          <h3 class="card-title">Technical Content Creation</h3>
+          <p class="card-text">صناعة محتوى تقني وتعليمي مبسّط.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== Achievements ==================== -->
+    <section class="section" id="achievements">
+      <h2 class="section-title">Achievements</h2>
+
+      <div class="grid grid-3">
+
+        <article class="card achievement-card">
+          <h3 class="card-title">ZakWare — 12K+ Followers</h3>
+          <p class="card-text">قناة تعليمية للبرمجة والتقنيات.</p>
+          <span class="badge">12K+ Followers</span>
+        </article>
+
+        <article class="card achievement-card">
+          <h3 class="card-title">HTML Educational Guide</h3>
+          <p class="card-text">ملزمة لتعليم أساسيات HTML.</p>
+        </article>
+
+        <article class="card achievement-card">
+          <h3 class="card-title">Technical Content</h3>
+          <p class="card-text">محتوى تعليمي وتقني للطلاب والمبتدئين.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== Certificates ==================== -->
+    <section class="section" id="certificates">
+      <h2 class="section-title">Certificates</h2>
+
+      <div class="grid grid-2">
+
+        <article class="card cert-card">
+          <h3 class="card-title">Artificial Intelligence</h3>
+          <p class="card-text">شهادة من دورة في دبي.</p>
+        </article>
+
+        <article class="card cert-card">
+          <h3 class="card-title">Programming</h3>
+          <p class="card-text">شهادة من دورة في الأردن.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ==================== My Projects ==================== -->
+    <section class="section" id="projects">
+      <h2 class="section-title">My Projects</h2>
+
+      <article class="card project-card">
+        <!-- غيّر IMG_6769.jpeg إلى اسم صورة المشروع -->
+        <div class="media-frame">
+          <img src="IMG_6769.jpeg" alt="ZakLab — Medical Laboratory Educational Website" />
+        </div>
+
+        <h3 class="card-title">ZakLab — Medical Laboratory Educational Website</h3>
+
+        <p class="card-text">
+          موقع تعليمي للمختبرات الطبية يساعد الطلاب والخريجين بمعلومات منظمة.
+        </p>
+
+        <p style="margin-top:1rem;">
+          <a class="btn btn-primary" href="https://zakarira0.github.io/Zak-Lab/" target="_blank" rel="noopener">View Project</a>
+        </p>
+      </article>
+    </section>
+
+    <!-- ==================== Content Creation ==================== -->
+    <section class="section" id="content">
+      <h2 class="section-title">Content Creation</h2>
+
+      <article class="card content-card">
+        <!-- غيّر IMG_6770.jpeg إلى اسم ملف الشعار -->
+        <div class="media-frame media-frame--square">
+          <img src="IMG_6770.jpeg" alt="ZakWare Logo" />
+        </div>
+
+        <h3 class="card-title">ZakWare</h3>
+
+        <p class="card-text">
+          قناة ZakWare متخصصة في تعليم البرمجة والتقنيات وتبسيط المعلومات البرمجية،
+          وتقديم محتوى مناسب للطلاب والمبتدئين.
+        </p>
+      </article>
+    </section>
+
+    <!-- ==================== Contact Me ==================== -->
+    <section class="section" id="contact">
+      <h2 class="section-title">Contact Me</h2>
+
+      <div class="grid grid-2">
+
+        <!-- تليكرام شخصي: ضع رابط حسابك مكان # (مثال: https://t.me/username) -->
+        <a class="contact-card" href="https://t.me/Zak_28" target="_blank" rel="noopener">
+          <span>✈️</span>
+          Telegram (Personal)
+        </a>
+
+        <!-- قناة الإنستغرام: ضع رابط القناة مكان # -->
+        <a class="contact-card" href="https://www.instagram.com/zak.ware?stkn=MWZncXcxOWVhdHA2OQ==" target="_blank" rel="noopener">
+          <span>📸</span>
+          Instagram — Channel
+        </a>
+
+        <!-- حساب الإنستغرام الشخصي: ضع رابط حسابك مكان # -->
+        <a class="contact-card" href="https://www.instagram.com/5t___q?igsh=M2xzazI3aXh3YnJn" target="_blank" rel="noopener">
+          <span>👤</span>
+          Instagram — Personal
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== Footer ==================== -->
+  <footer class="site-footer">
+    <!-- عدّل السنة عند الحاجة -->
+    <p>© 2026 <span dir="ltr">Zakaria Omar Adel</span> — جميع الحقوق محفوظة.</p>
+  </footer>
+
+</body>
+</html>
